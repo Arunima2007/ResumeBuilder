@@ -10,14 +10,4 @@ export default defineConfig({
       },
     }),
   ],
-  // ADD THESE LINES:
-  build: {
-    outDir: 'dist'
-  },
-  base: './',
-  // Optional: For better development experience
-  server: {
-    port: 3000,
-    host: true
-  }
 })
