@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Resume from './pages/Resume';
 import Contact from './components/Contact';
 import './App.css';
