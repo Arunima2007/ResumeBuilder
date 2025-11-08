@@ -4,9 +4,6 @@ import { motion } from 'framer-motion';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import '../styles/LandingPage.css';
-import img1 from '../assets/img1.jpg';
-import img2 from '../assets/img2.jpg';
-import img3 from '../assets/img3.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEducation } from '../redux/educationSlice';
 import { updateProfile } from '../redux/profileSlice';
@@ -19,21 +16,14 @@ import { updateAchievements, updateExtraCoCurricular, updateSkills } from '../re
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#1976d2',
+            main: '#c93184ff'
         },
         secondary: {
-            main: '#ff6f61',
+            main: '#8b6865ff',
         },
-        background: {
-            default: '#ffecd6',
-        },
-        text: {
-            primary: '#333333',
-            secondary: '#555555',
-        },
+        // Remove background default to use transparent
     },
 });
-
 
 export default function LandingPage() {
     const currentUser = useSelector((state) => state.user.currentUser);
@@ -41,16 +31,13 @@ export default function LandingPage() {
     const dispatch = useDispatch();
 
     const getAllResumeData = async () => {
-        // console.log('entered');
         try {
             const response = await axios.get(`${API_BASE_URL}/data/get-all-resume-data?id=${currentUser._id}`, {
                 headers: {
                     authorization: currentUser.token,
                 },
             });
-            // console.log("response: ", response.data.resumeData[0]);
             const resumeData = response.data.resumeData[0];
-            // console.log('Education:', resumeData.education[0])
             if (resumeData) {
                 dispatch(updateProfile(resumeData.profile));
                 dispatch(updateEducation(resumeData.education[0]));
@@ -60,27 +47,23 @@ export default function LandingPage() {
                     });
                 });
 
-                // Assuming resumeData.experience is an array
                 resumeData.experience.forEach((experience, index) => {
                     Object.keys(experience).forEach(field => {
                         dispatch(updateExperience({ index, field, value: experience[field] }));
                     });
                 });
                 const { skills, achievements, extraCoCurricular } = resumeData.extraDetails;
-                // Update skills
-                // console.log(skills);
+                
                 Object.keys(skills).forEach((type) => {
                     skills[type].forEach((skill, index) => {
                         dispatch(updateSkills({ type, index, value: skill }));
                     });
                 });
 
-                // Update achievements
                 achievements.forEach((achievement, index) => {
                     dispatch(updateAchievements({ index, value: achievement }));
                 });
 
-                // Update extra co-curricular activities
                 extraCoCurricular.forEach((activity, index) => {
                     dispatch(updateExtraCoCurricular({ index, value: activity }));
                 });
@@ -100,57 +83,46 @@ export default function LandingPage() {
 
     return (
         <div className="main-content">
-        <ThemeProvider theme={theme}>
-            <Box className='box-container'>
-                <div style={{ color: 'black' }}>
-                    <div className="img-container">
-                        <div className="image-container-1">
-                            <img src={img1} alt="image1" className="image-style-1" />
-                        </div>
-                        <div className="image-container-2">
-                            <img src={img2} alt="image1" className="image-style-2" />
-                        </div>
-
-                        <div className="image-container-3">
-                            <img src={img3} alt="image1" className="image-style-3" />
-                        </div>
-                    </div>
-                    <div >
-                        <div className="overlay-text">
-                            <Container maxWidth="md">
-                                <motion.div
-                                    initial={{ opacity: 0, y: -50 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 1 }}
-                                >
-                                    <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: '800' }}>
-                                        Build. Analyze. Impress. Your Complete Resume Success Platform.
-                                    </Typography>
-                                </motion.div>
-                                <motion.div
-                                    initial={{ opacity: 0, y: 50 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 1, delay: 0.5 }}
-                                >
-                                    <Typography variant="h5" component="h1" gutterBottom>
-                                        Create a resume that stands out with our easy-to-use builder
-                                    </Typography>
-                                </motion.div>
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 1, delay: 1 }}
-                                >
-                                    <Button onClick={handleGetStarted} variant='outlined' sx={{ borderRadius: '30px', color: 'black', backgroundColor: "var(--btnColor)", "&:hover": { backgroundColor: "var(--landBtnHover)", border: 'none' }, border: 'none', fontWeight: 600 }} size="large">
-                                        Get Started
-                                    </Button>
-                                </motion.div>
-                            </Container>
+            <ThemeProvider theme={theme}>
+                <Box className='box-container' sx={{ backgroundColor: 'transparent' }}>
+                    <div>
+                        
+                        <div>
+                            <div className="overlay-text">
+                                <Container maxWidth="md">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -50 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 1 }}
+                                    >
+                                        <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: '800' }}>
+                                            Build. Analyze. Impress. Your Complete Resume Success Platform.
+                                        </Typography>
+                                    </motion.div>
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 50 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 1, delay: 0.5 }}
+                                    >
+                                        <Typography variant="h5" component="h1" gutterBottom>
+                                            Create a resume that stands out with our easy-to-use builder
+                                        </Typography>
+                                    </motion.div>
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 1, delay: 1 }}
+                                    >
+                                        <Button onClick={handleGetStarted} variant='outlined' sx={{ borderRadius: '30px', color: 'black', backgroundColor: "var(--btnColor)", "&:hover": { backgroundColor: "var(--landBtnHover)", border: 'none' }, border: 'none', fontWeight: 600 }} size="large">
+                                            Get Started
+                                        </Button>
+                                    </motion.div>
+                                </Container>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </Box>
-        </ThemeProvider >
+                </Box>
+            </ThemeProvider>
         </div>
     );
 }

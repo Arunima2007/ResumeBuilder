@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
   Box,
+  Container
 } from "@mui/material";
 import EventIcon from "@mui/icons-material/Event";
 import SchoolIcon from "@mui/icons-material/School";
@@ -37,7 +38,6 @@ const Education = () => {
     justifyContent: "center",
     flexDirection: "column",
     padding: "20px",
-    maxWidth: "1200px",
     margin: "0 auto",
   };
 
@@ -58,8 +58,8 @@ const Education = () => {
   const schoolBoard = ["Maharashtra State Board", "CBSE", "ICSE"];
 
   return (
-    <div style={containerStyle}>
-      <Card sx={{ mb: 3, boxShadow: 3 }}>
+    <Container maxWidth="xl" sx={containerStyle}>
+      <Card sx={{ mb: 3, boxShadow: 3, width: '100%' }}>
         <CardHeader
           title={
             <Typography variant="h5" align="center" fontWeight="bold" color="primary">
@@ -70,8 +70,8 @@ const Education = () => {
       </Card>
       
       {/* College Details */}
-      <Card sx={{ mb: 4, boxShadow: 2 }}>
-        <CardContent>
+      <Card sx={{ mb: 4, boxShadow: 2, width: '100%' }}>
+        <CardContent sx={{ p: 4 }}>
           <Typography variant="h6" align="left" sx={{ mb: 3, fontWeight: 'bold', color: 'primary.main' }}>
             College/University Details
           </Typography>
@@ -96,6 +96,11 @@ const Education = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -107,12 +112,29 @@ const Education = () => {
                 label="Year"
                 value={education.year || ''}
                 onChange={handleChange}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '120px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '200px !important'
+                      }
+                    }
+                  }
+                }}
               >
-                <MenuItem value="F.E">F.E</MenuItem>
-                <MenuItem value="S.E">S.E</MenuItem>
-                <MenuItem value="T.E">T.E</MenuItem>
-                <MenuItem value="B.E">B.E</MenuItem>
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="F.E" sx={{ minWidth: '120px' }}>F.E</MenuItem>
+                <MenuItem value="S.E" sx={{ minWidth: '120px' }}>S.E</MenuItem>
+                <MenuItem value="T.E" sx={{ minWidth: '120px' }}>T.E</MenuItem>
+                <MenuItem value="B.E" sx={{ minWidth: '120px' }}>B.E</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '120px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -125,12 +147,29 @@ const Education = () => {
                 required
                 value={education.field || ''}
                 onChange={handleChange}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '150px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '250px !important'
+                      }
+                    }
+                  }
+                }}
               >
-                <MenuItem value="" disabled>Select Field</MenuItem>
+                <MenuItem value="" disabled sx={{ minWidth: '150px' }}>Select Field</MenuItem>
                 {otherFields.map((field) => (
-                  <MenuItem key={field} value={field}>{field}</MenuItem>
+                  <MenuItem key={field} value={field} sx={{ minWidth: '150px' }}>{field}</MenuItem>
                 ))}
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '150px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
 
@@ -145,12 +184,29 @@ const Education = () => {
                 required
                 value={education.branch || ''}
                 onChange={handleChange}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '120px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '200px !important'
+                      }
+                    }
+                  }
+                }}
               >
-                <MenuItem value="" disabled>Select Branch</MenuItem>
+                <MenuItem value="" disabled sx={{ minWidth: '120px' }}>Select Branch</MenuItem>
                 {engineeringFields.map((field) => (
-                  <MenuItem key={field} value={field}>{field}</MenuItem>
+                  <MenuItem key={field} value={field} sx={{ minWidth: '120px' }}>{field}</MenuItem>
                 ))}
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '120px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -162,21 +218,29 @@ const Education = () => {
                 label="Start Year"
                 value={education.startYear || ''}
                 onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton edge="end">
-                        <EventIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '100px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '150px !important'
+                      }
+                    }
+                  }
                 }}
               >
-                <MenuItem value="" disabled>Select Year</MenuItem>
+                <MenuItem value="" disabled sx={{ minWidth: '100px' }}>Select Year</MenuItem>
                 {years.map((year) => (
-                  <MenuItem key={year} value={year}>{year}</MenuItem>
+                  <MenuItem key={year} value={year} sx={{ minWidth: '100px' }}>{year}</MenuItem>
                 ))}
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '100px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -188,21 +252,29 @@ const Education = () => {
                 label="End Year"
                 value={education.endYear || ''}
                 onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton edge="end">
-                        <EventIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '100px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '150px !important'
+                      }
+                    }
+                  }
                 }}
               >
-                <MenuItem value="" disabled>Select Year</MenuItem>
+                <MenuItem value="" disabled sx={{ minWidth: '100px' }}>Select Year</MenuItem>
                 {years.map((year) => (
-                  <MenuItem key={year} value={year}>{year}</MenuItem>
+                  <MenuItem key={year} value={year} sx={{ minWidth: '100px' }}>{year}</MenuItem>
                 ))}
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '100px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
 
@@ -224,6 +296,11 @@ const Education = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -243,6 +320,11 @@ const Education = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  }
+                }}
               />
             </Grid>
           </Grid>
@@ -250,8 +332,8 @@ const Education = () => {
       </Card>
 
       {/* 12th Details */}
-      <Card sx={{ mb: 4, boxShadow: 2 }}>
-        <CardContent>
+      <Card sx={{ mb: 4, boxShadow: 2, width: '100%' }}>
+        <CardContent sx={{ p: 4 }}>
           <Typography variant="h6" align="left" sx={{ mb: 3, fontWeight: 'bold', color: 'primary.main' }}>
             Higher secondary education (12th) Details
           </Typography>
@@ -276,6 +358,11 @@ const Education = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -287,21 +374,29 @@ const Education = () => {
                 label="Start Year"
                 value={education.startYear2 || ''}
                 onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton edge="end">
-                        <EventIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '100px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '150px !important'
+                      }
+                    }
+                  }
                 }}
               >
-                <MenuItem value="" disabled>Select Year</MenuItem>
+                <MenuItem value="" disabled sx={{ minWidth: '100px' }}>Select Year</MenuItem>
                 {years.map((year) => (
-                  <MenuItem key={year} value={year}>{year}</MenuItem>
+                  <MenuItem key={year} value={year} sx={{ minWidth: '100px' }}>{year}</MenuItem>
                 ))}
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '100px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -313,21 +408,29 @@ const Education = () => {
                 label="End Year"
                 value={education.endYear2 || ''}
                 onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton edge="end">
-                        <EventIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '100px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '150px !important'
+                      }
+                    }
+                  }
                 }}
               >
-                <MenuItem value="" disabled>Select Year</MenuItem>
+                <MenuItem value="" disabled sx={{ minWidth: '100px' }}>Select Year</MenuItem>
                 {years.map((year) => (
-                  <MenuItem key={year} value={year}>{year}</MenuItem>
+                  <MenuItem key={year} value={year} sx={{ minWidth: '100px' }}>{year}</MenuItem>
                 ))}
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '100px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
 
@@ -349,6 +452,11 @@ const Education = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -368,6 +476,11 @@ const Education = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -380,12 +493,29 @@ const Education = () => {
                 required
                 value={education.board1 || ''}
                 onChange={handleChange}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '180px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '300px !important'
+                      }
+                    }
+                  }
+                }}
               >
-                <MenuItem value="" disabled>Select Board</MenuItem>
+                <MenuItem value="" disabled sx={{ minWidth: '180px' }}>Select Board</MenuItem>
                 {higherCollegeBoard.map((field) => (
-                  <MenuItem key={field} value={field}>{field}</MenuItem>
+                  <MenuItem key={field} value={field} sx={{ minWidth: '180px' }}>{field}</MenuItem>
                 ))}
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '180px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
           </Grid>
@@ -393,8 +523,8 @@ const Education = () => {
       </Card>
 
       {/* 10th Details */}
-      <Card sx={{ mb: 4, boxShadow: 2 }}>
-        <CardContent>
+      <Card sx={{ mb: 4, boxShadow: 2, width: '100%' }}>
+        <CardContent sx={{ p: 4 }}>
           <Typography variant="h6" align="left" sx={{ mb: 3, fontWeight: 'bold', color: 'primary.main' }}>
             Secondary education (10th) Details
           </Typography>
@@ -419,6 +549,11 @@ const Education = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -430,21 +565,29 @@ const Education = () => {
                 label="Start Year"
                 value={education.startYear3 || ''}
                 onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton edge="end">
-                        <EventIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '100px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '150px !important'
+                      }
+                    }
+                  }
                 }}
               >
-                <MenuItem value="" disabled>Select Year</MenuItem>
+                <MenuItem value="" disabled sx={{ minWidth: '100px' }}>Select Year</MenuItem>
                 {years.map((year) => (
-                  <MenuItem key={year} value={year}>{year}</MenuItem>
+                  <MenuItem key={year} value={year} sx={{ minWidth: '100px' }}>{year}</MenuItem>
                 ))}
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '100px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -456,21 +599,29 @@ const Education = () => {
                 label="End Year"
                 value={education.endYear3 || ''}
                 onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton edge="end">
-                        <EventIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '100px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '150px !important'
+                      }
+                    }
+                  }
                 }}
               >
-                <MenuItem value="" disabled>Select Year</MenuItem>
+                <MenuItem value="" disabled sx={{ minWidth: '100px' }}>Select Year</MenuItem>
                 {years.map((year) => (
-                  <MenuItem key={year} value={year}>{year}</MenuItem>
+                  <MenuItem key={year} value={year} sx={{ minWidth: '100px' }}>{year}</MenuItem>
                 ))}
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '100px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
 
@@ -492,6 +643,11 @@ const Education = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -511,6 +667,11 @@ const Education = () => {
                     </InputAdornment>
                   ),
                 }}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -523,12 +684,29 @@ const Education = () => {
                 required
                 value={education.board2 || ''}
                 onChange={handleChange}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    fontSize: '1rem'
+                  },
+                  '& .MuiSelect-select': {
+                    minWidth: '180px'
+                  }
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    PaperProps: {
+                      sx: {
+                        minWidth: '300px !important'
+                      }
+                    }
+                  }
+                }}
               >
-                <MenuItem value="" disabled>Select Board</MenuItem>
+                <MenuItem value="" disabled sx={{ minWidth: '180px' }}>Select Board</MenuItem>
                 {schoolBoard.map((field) => (
-                  <MenuItem key={field} value={field}>{field}</MenuItem>
+                  <MenuItem key={field} value={field} sx={{ minWidth: '180px' }}>{field}</MenuItem>
                 ))}
-                <MenuItem value="">Clear Selection</MenuItem>
+                <MenuItem value="" sx={{ minWidth: '180px' }}>Clear Selection</MenuItem>
               </TextField>
             </Grid>
           </Grid>
@@ -536,7 +714,7 @@ const Education = () => {
       </Card>
 
       {/* Navigation Links */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 3, px: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 3, px: 2, width: '100%' }}>
         <Link to="/profile" style={linkStyle}>
           <ArrowBackIcon sx={iconStyle} />
           <Typography variant="h6">Profile Section</Typography>
@@ -546,7 +724,7 @@ const Education = () => {
           <ArrowForwardIcon sx={iconStyle} />
         </Link>
       </Box>
-    </div>
+    </Container>
   );
 };
 

@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Avatar, Menu, MenuItem, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Button, Avatar, Menu, MenuItem } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import MenuIcon from '@mui/icons-material/Menu';
-import HomeIcon from '@mui/icons-material/Home';
-import EditIcon from '@mui/icons-material/Edit';
-import DescriptionIcon from '@mui/icons-material/Description';
-import LogoutIcon from '@mui/icons-material/Logout';
 import logo from "../assets/profile.png";
 import { logoutUser } from "../redux/userSlice";
 import { clearEducation } from "../redux/educationSlice";
@@ -25,7 +20,6 @@ const Navbar = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const [sectionsAnchorEl, setSectionsAnchorEl] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -34,7 +28,6 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
     setSectionsAnchorEl(null);
-    setIsDrawerOpen(false);
   };
 
   const handleLogout = () => {
@@ -49,7 +42,7 @@ const Navbar = () => {
 
   return (
     <AppBar
-      position="fixed" // Changed from "static" to "fixed"
+      position="fixed"
       sx={{
         backgroundColor: "var(--bgColor, #0d47a1)",
         color: "white",
@@ -60,7 +53,7 @@ const Navbar = () => {
         margin: 0,
         padding: 0,
         boxShadow: "0 2px 10px rgba(0,0,0,0.15)",
-        zIndex: (theme) => theme.zIndex.drawer + 1, // Ensure navbar stays above other content
+        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Toolbar 
@@ -73,51 +66,8 @@ const Navbar = () => {
           px: 2
         }}
       >
-        {/* LEFT SIDE */}
+        {/* LEFT SIDE - Logo and Brand Name */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <IconButton
-            edge="start"
-            sx={{
-              color: "black",
-              '&:hover': { color: '#222' }
-            }}
-            aria-label="menu"
-            onClick={() => setIsDrawerOpen(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Drawer
-            anchor="left"
-            open={isDrawerOpen}
-            onClose={() => setIsDrawerOpen(false)}
-          >
-            {currentUser ? (
-              <List>
-                <ListItem button component={Link} to="/" onClick={handleClose}>
-                  <ListItemIcon><HomeIcon /></ListItemIcon>
-                  <ListItemText primary="Home" />
-                </ListItem>
-                <ListItem button component={Link} to="/profile" onClick={handleClose}>
-                  <ListItemIcon><EditIcon /></ListItemIcon>
-                  <ListItemText primary="Edit Resume" />
-                </ListItem>
-                <ListItem button component={Link} to="/templates" onClick={handleClose}>
-                  <ListItemIcon><DescriptionIcon /></ListItemIcon>
-                  <ListItemText primary="Templates" />
-                </ListItem>
-                <ListItem button onClick={handleLogout}>
-                  <ListItemIcon><LogoutIcon /></ListItemIcon>
-                  <ListItemText primary="Logout" />
-                </ListItem>
-              </List>
-            ) : (
-              <div style={{ padding: "20px", textAlign: "center" }}>
-                <h3>Login Please!</h3>
-              </div>
-            )}
-          </Drawer>
-
           <img src={logo} alt="resume" width="40" height="40" />
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
             <Link to="/" style={{ color: "black", textDecoration: "none" }}>
@@ -126,7 +76,7 @@ const Navbar = () => {
           </Typography>
         </div>
 
-        {/* RIGHT SIDE */}
+        {/* RIGHT SIDE - Navigation Items */}
         {currentUser ? (
           <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
             <Button 

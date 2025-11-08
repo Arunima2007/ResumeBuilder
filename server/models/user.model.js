@@ -12,6 +12,21 @@ const userSchema = new mongoose.Schema({
         unique: true,
         lowercase: true,
     },
+    secondaryEmails: [{
+        email: {
+            type: String,
+            required: true,
+            lowercase: true,
+        },
+        verified: {
+            type: Boolean,
+            default: false
+        },
+        addedAt: {
+            type: Date,
+            default: Date.now
+        }
+    }],
     password: {
         type: String,
         required: true,
