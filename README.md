@@ -62,11 +62,10 @@ ResumeBuilder/
 ```bash
 git clone https://github.com/Arunima2007/ResumeBuilder.git
 cd ResumeBuilder
-2️⃣ Install dependencies
+### 2️⃣ Install dependencies
 # frontend
 cd frontend
 npm install
-
 # backend
 cd ../backend
 npm install
@@ -77,13 +76,13 @@ npm install
 # backend
 cd ../backend
 npm install
-3️⃣ Setup Environment Variables
+### 3️⃣ Setup Environment Variables
 
 Create a .env file in backend:
 
 GEMINI_API_KEY=your_api_key_here
 PORT=5000
-4️⃣ Run the project
+### 4️⃣ Run the project
 # Run backend
 cd backend
 npm run dev
