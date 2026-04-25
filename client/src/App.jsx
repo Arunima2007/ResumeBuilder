@@ -21,6 +21,8 @@ import Experience from './components/Experience';
 import ExtraDetails from './components/ExtraDetails';
 import ResumeLayout from './components/ResumeLayout';
 import ErrorPage from './pages/ErrorPage';
+// ✅ ADD THIS IMPORT
+import ResumeAnalysisPage from './pages/ResumeAnalysisPage';
 
 function App() {
   return (
@@ -36,17 +38,14 @@ function App() {
                 <Route path='/user-profile' element={<UserProfile />} />
                 <Route path='/templates' element={<Templates />} />
                 
-                {/* ✅ Resume Analysis is handled within ResumeLayout - remove this separate route */}
-                {/* <Route path='/resume-analysis' element={<ResumeAnalysisPage />} /> */}
-                
                 <Route element={<ResumeLayout />}>
                   <Route path='/profile' element={<Profile />} />
                   <Route path='/education' element={<Education />} />
                   <Route path='/projects' element={<Projects />} />
                   <Route path='/experience' element={<Experience />} />
                   <Route path='/extraDetails' element={<ExtraDetails />} />
-                  {/* ✅ Add resume-analysis as a nested route inside ResumeLayout */}
-                  <Route path='/resume-analysis' element={<div />} />
+                  {/* ✅ CHANGE THIS LINE from <div /> to your component */}
+                  <Route path='/resume-analysis' element={<ResumeAnalysisPage />} />
                 </Route>
                 <Route path='/resume/:template' element={<Resume />} />
                 <Route path='/contact-us' element={<Contact />} />

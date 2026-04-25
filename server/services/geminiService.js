@@ -1,199 +1,266 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const { ANALYSIS_PROMPTS } = require('../utils/constants.js');
+// server/services/geminiService.js
+const { GoogleGenAI } = require('@google/genai');
 
 class GeminiService {
   constructor() {
-    if (!process.env.GEMINI_API_KEY) {
-      throw new Error('GEMINI_API_KEY is not configured in environment variables');
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('GEMINI_API_KEY is not set in environment variables');
     }
-    
-    this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    this.model = null;
-    this.currentModelName = null;
-    
-    this.initializeModel();
+    this.ai = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
+    });
   }
 
-  initializeModel() {
-    // Try the latest models first
-    const availableModels = [
-      'gemini-2.0-flash-exp', // Latest experimental version
-      'gemini-2.5-flash',
-      'gemini-1.5-pro',
-      'gemini-1.0-pro'
-    ];
+  /**
+   * Build a structured text representation of the resume for the prompt
+   */
+  buildResumeText(resume) {
+    let text = '';
 
-    for (const modelName of availableModels) {
-      try {
-        console.log(`🔄 Trying to initialize model: ${modelName}`);
-        this.model = this.genAI.getGenerativeModel({ 
-          model: modelName,
-          generationConfig: {
-            temperature: 0.1,
-            maxOutputTokens: 2048,
-          }
+    // Profile
+    if (resume.profile) {
+      const p = resume.profile;
+      text += `## PROFILE\n`;
+      text += `Name: ${p.firstName || ''} ${p.lastName || ''}\n`;
+      text += `Email: ${p.email || 'Not provided'}\n`;
+      text += `Phone: ${p.mobile || 'Not provided'}\n`;
+      text += `LinkedIn: ${p.linkedIn || 'Not provided'}\n`;
+      text += `GitHub: ${p.github || 'Not provided'}\n`;
+      if (p.summary) text += `Summary: ${p.summary}\n`;
+      if (p.objective) text += `Objective: ${p.objective}\n`;
+      text += '\n';
+    }
+
+    // Education
+    if (resume.education && Array.isArray(resume.education) && resume.education.length > 0) {
+      text += `## EDUCATION\n`;
+      resume.education.forEach((edu, i) => {
+        text += `${i + 1}. ${edu.college || edu.school || 'Institution'}\n`;
+        text += `   Degree/Field: ${edu.field || edu.degree || 'Not specified'}\n`;
+        text += `   Branch: ${edu.branch || 'N/A'}\n`;
+        text += `   Year: ${edu.startYear || ''} - ${edu.endYear || ''}\n`;
+        text += `   Grades: ${edu.grades || 'Not specified'}\n`;
+        if (edu.description) text += `   Details: ${edu.description}\n`;
+      });
+      text += '\n';
+    }
+
+    // Experience
+    if (resume.experience && Array.isArray(resume.experience) && resume.experience.length > 0) {
+      text += `## EXPERIENCE\n`;
+      resume.experience.forEach((exp, i) => {
+        text += `${i + 1}. ${exp.role || exp.title || 'Role'} at ${exp.institute || exp.company || 'Company'}\n`;
+        text += `   Duration: ${exp.start_date || ''} - ${exp.end_date || 'Present'}\n`;
+        if (exp.desc || exp.description) text += `   Description: ${exp.desc || exp.description}\n`;
+      });
+      text += '\n';
+    }
+
+    // Projects
+    if (resume.projects && Array.isArray(resume.projects) && resume.projects.length > 0) {
+      text += `## PROJECTS\n`;
+      resume.projects.forEach((proj, i) => {
+        text += `${i + 1}. ${proj.title || 'Project'}\n`;
+        if (proj.description) text += `   Description: ${proj.description}\n`;
+        if (proj.techStack) text += `   Tech Stack: ${proj.techStack}\n`;
+        if (proj.link) text += `   Link: ${proj.link}\n`;
+      });
+      text += '\n';
+    }
+
+    // Skills
+    if (resume.extraDetails) {
+      const extra = resume.extraDetails;
+      if (extra.skills) {
+        text += `## SKILLS\n`;
+        if (typeof extra.skills === 'object' && !Array.isArray(extra.skills)) {
+          Object.entries(extra.skills).forEach(([category, skills]) => {
+            if (Array.isArray(skills) && skills.length > 0) {
+              text += `${category}: ${skills.join(', ')}\n`;
+            }
+          });
+        } else if (Array.isArray(extra.skills)) {
+          text += extra.skills.join(', ') + '\n';
+        }
+        text += '\n';
+      }
+
+      if (extra.achievements && Array.isArray(extra.achievements) && extra.achievements.length > 0) {
+        text += `## ACHIEVEMENTS\n`;
+        extra.achievements.forEach((ach, i) => {
+          text += `${i + 1}. ${ach}\n`;
         });
-        this.currentModelName = modelName;
-        console.log(`✅ Successfully initialized: ${modelName}`);
-        break;
-      } catch (error) {
-        console.log(`❌ Model ${modelName} failed: ${error.message}`);
-        continue;
+        text += '\n';
+      }
+
+      if (extra.extraCoCurricular && Array.isArray(extra.extraCoCurricular) && extra.extraCoCurricular.length > 0) {
+        text += `## EXTRACURRICULAR ACTIVITIES\n`;
+        extra.extraCoCurricular.forEach((act, i) => {
+          text += `${i + 1}. ${act}\n`;
+        });
+        text += '\n';
       }
     }
 
-    if (!this.model) {
-      console.warn('⚠️ No Gemini model could be initialized. Using basic analysis only.');
-    }
+    return text;
   }
 
-  async analyzeResume(resumeData, analysisType = 'comprehensive') {
-    if (!this.model) {
-      throw new Error('Gemini model not available');
+  /**
+   * Full AI-powered resume analysis
+   */
+  async analyzeResume(resume, jobDescription = '') {
+    const resumeText = this.buildResumeText(resume);
+
+    const jdSection = jobDescription.trim()
+      ? `\n\n## TARGET JOB DESCRIPTION:\n${jobDescription}\n\nPlease also provide ATS match analysis comparing the resume against this job description.`
+      : '\n\nNo specific job description provided. Provide general resume improvement advice.';
+
+    const prompt = `You are an expert resume analyst and career coach. Analyze the following resume and provide detailed, actionable feedback.
+
+${resumeText}
+${jdSection}
+
+Respond ONLY with valid JSON in this exact structure (no markdown, no code fences, no extra text):
+{
+  "overallScore": <number 0-100>,
+  "scoreLabel": "<one of: Excellent, Strong, Good, Needs Improvement, Weak>",
+  "summary": "<2-3 sentence overall assessment>",
+  "strengths": ["<strength 1>", "<strength 2>", "<strength 3>"],
+  "weaknesses": ["<weakness 1>", "<weakness 2>", "<weakness 3>"],
+  "sections": {
+    "profile": {
+      "score": <number 0-100>,
+      "feedback": "<specific feedback about profile/contact section>",
+      "suggestions": ["<suggestion 1>", "<suggestion 2>"]
+    },
+    "education": {
+      "score": <number 0-100>,
+      "feedback": "<specific feedback about education section>",
+      "suggestions": ["<suggestion 1>", "<suggestion 2>"]
+    },
+    "experience": {
+      "score": <number 0-100>,
+      "feedback": "<specific feedback about experience section>",
+      "suggestions": ["<suggestion 1>", "<suggestion 2>"]
+    },
+    "projects": {
+      "score": <number 0-100>,
+      "feedback": "<specific feedback about projects section>",
+      "suggestions": ["<suggestion 1>", "<suggestion 2>"]
+    },
+    "skills": {
+      "score": <number 0-100>,
+      "feedback": "<specific feedback about skills section>",
+      "suggestions": ["<suggestion 1>", "<suggestion 2>"]
     }
-
-    const startTime = Date.now();
-    
-    try {
-      const prompt = this.buildPrompt(resumeData, analysisType);
-      
-      console.log(`🚀 Sending request to Gemini (${this.currentModelName})...`);
-      
-      // Log the prompt (first 500 chars) for debugging
-      console.log(`📝 Prompt preview: ${prompt.substring(0, 500)}...`);
-      
-      const result = await this.model.generateContent(prompt);
-      const response = await result.response;
-      const content = response.text();
-      
-      // ✅ NOW SHOWING RAW RESPONSE
-      console.log('📄 FULL RAW RESPONSE:');
-      console.log('=' .repeat(50));
-      console.log(content);
-      console.log('=' .repeat(50));
-      console.log(`📏 Response length: ${content.length} characters`);
-      
-      // Extract JSON from response
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        console.log('❌ No JSON found in response. Using fallback analysis.');
-        console.log('🔍 Response starts with:', content.substring(0, 200));
-        return this.getFallbackAnalysis();
-      }
-      
-      console.log('✅ JSON pattern found, attempting to parse...');
-      
-      try {
-        const analysisResult = JSON.parse(jsonMatch[0]);
-        const processingTime = Date.now() - startTime;
-        
-        console.log(`✅ Gemini analysis completed in ${processingTime}ms`);
-        console.log(`📊 Analysis results - Overall Score: ${analysisResult.overallScore}`);
-        
-        return {
-          ...analysisResult,
-          metadata: {
-            processingTime,
-            provider: 'gemini',
-            model: this.currentModelName,
-            success: true,
-            responseLength: content.length
-          }
-        };
-      } catch (parseError) {
-        console.error('❌ JSON parse error:', parseError.message);
-        console.log('🔍 Problematic JSON:', jsonMatch[0].substring(0, 500));
-        return this.getFallbackAnalysis();
-      }
-      
-    } catch (error) {
-      console.error('❌ Gemini Analysis Error:', error.message);
-      throw new Error(`Gemini analysis failed: ${error.message}`);
+  },
+  "atsOptimization": {
+    "score": <number 0-100>,
+    "tips": ["<ATS tip 1>", "<ATS tip 2>", "<ATS tip 3>"],
+    "keywordsToAdd": ["<keyword 1>", "<keyword 2>"],
+    "formattingIssues": ["<issue 1>", "<issue 2>"]
+  },
+  "actionItems": [
+    {
+      "priority": "<high|medium|low>",
+      "action": "<specific action to take>",
+      "impact": "<expected impact of this action>"
     }
-  }
-
-  getFallbackAnalysis() {
-    return {
-      overallScore: 70,
-      sectionScores: {
-        personal: 80,
-        education: 75,
-        experience: 65,
-        projects: 70,
-        skills: 75
-      },
-      strengths: [
-        "Resume has good structure and organization",
-        "Includes relevant sections for professional presentation"
-      ],
-      improvements: [
-        "Add more quantifiable achievements",
-        "Include specific technologies and tools",
-        "Expand on project descriptions and impact"
-      ],
-      atsScore: 65,
-      aiSuggestions: {
-        immediateImprovements: [
-          "Use action verbs to start bullet points",
-          "Add measurable results and metrics",
-          "Include relevant keywords from job descriptions"
-        ],
-        longTermSuggestions: [
-          "Build a portfolio of projects demonstrating skills",
-          "Gain experience through internships or freelance work",
-          "Network with professionals in your target industry"
-        ]
-      },
-      metadata: {
-        provider: 'gemini',
-        model: this.currentModelName,
-        fallback: true
-      }
-    };
-  }
-
-  buildPrompt(resumeData, analysisType) {
-    const promptTemplate = ANALYSIS_PROMPTS[analysisType] || ANALYSIS_PROMPTS.comprehensive;
-    
-    // Ensure resumeData is properly stringified
-    const resumeJson = typeof resumeData === 'string' ? resumeData : JSON.stringify(resumeData, null, 2);
-    
-    const fullPrompt = promptTemplate.replace('{resumeData}', resumeJson);
-    
-    // Enhanced JSON instruction
-    return fullPrompt + "\n\nCRITICAL: You MUST respond with ONLY valid JSON. Do not include any other text, code fences, markdown, or explanations. Your entire response should be parseable by JSON.parse().";
-  }
-
-  // Test with simpler prompt
-  async testWithSimplePrompt() {
-    if (!this.model) {
-      throw new Error('No model available');
+  ],
+  "industryFit": "<paragraph about how well this resume fits common industry expectations>",
+  "rewriteSuggestions": [
+    {
+      "original": "<original bullet point or text from resume>",
+      "improved": "<rewritten version with stronger impact>"
     }
+  ]
+}`;
 
     try {
-      const testPrompt = `Return ONLY this exact JSON without any other text: {"test": "success", "score": 85}`;
-      console.log('🧪 Testing with simple prompt...');
-      
-      const result = await this.model.generateContent(testPrompt);
-      const response = await result.response;
-      const content = response.text();
-      
-      console.log('Simple test response:', content);
-      
-      // Try to parse
-      try {
-        const parsed = JSON.parse(content);
-        console.log('✅ Simple test PASSED - JSON parsed successfully');
-        return parsed;
-      } catch (e) {
-        console.log('❌ Simple test FAILED - Response is not valid JSON');
-        return { error: 'Not valid JSON', response: content };
-      }
+  const result = await this.ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: [
+      { role: "user", parts: [{ text: prompt }] }
+    ],
+    generationConfig: {
+      temperature: 0.3,
+    },
+  });
+
+  let text =
+    result?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
+  text = text
+    .replace(/```json\s*/g, "")
+    .replace(/```\s*/g, "")
+    .trim();
+
+  console.log("Gemini raw response:", text);
+
+  const parsed = JSON.parse(text);
+
+  return { success: true, data: parsed };
+
+} catch (error) {
+  console.error("Gemini analysis error:", error);
+
+  return {
+    success: false,
+    error: `AI analysis failed: ${error.message}`,
+  };
+}
+  }
+
+  /**
+   * Quick targeted analysis (faster, smaller prompt)
+   */
+  async quickAnalysis(resume) {
+    const resumeText = this.buildResumeText(resume);
+
+    const prompt = `You are a resume expert. Give a quick assessment of this resume.
+
+${resumeText}
+
+Respond ONLY with valid JSON (no markdown, no code fences):
+{
+  "score": <number 0-100>,
+  "verdict": "<one short sentence verdict>",
+  "topStrengths": ["<strength 1>", "<strength 2>"],
+  "topImprovements": ["<improvement 1>", "<improvement 2>", "<improvement 3>"],
+  "missingElements": ["<missing element if any>"],
+  "quickTips": ["<tip 1>", "<tip 2>", "<tip 3>"]
+}`;
+
+    try {
+      const result = await this.ai.models.generateContent({
+  model: "gemini-2.5-flash",
+  contents: prompt,
+});
+
+let text = result.text || "";
+text = text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+console.log("Gemini raw response:", text);
+const parsed = JSON.parse(text);
+return { success: true, data: parsed };
     } catch (error) {
-      console.error('Test failed:', error);
-      throw error;
+      console.error('Gemini quick analysis error:', error);
+      return {
+        success: false,
+        error: `Quick analysis failed: ${error.message}`
+      };
     }
   }
 }
 
-module.exports = GeminiService;
+// Singleton instance
+let geminiServiceInstance = null;
+
+function getGeminiService() {
+  if (!geminiServiceInstance) {
+    geminiServiceInstance = new GeminiService();
+  }
+  return geminiServiceInstance;
+}
+
+module.exports = { GeminiService, getGeminiService };
