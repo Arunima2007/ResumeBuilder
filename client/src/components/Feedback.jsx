@@ -12,7 +12,7 @@ const Feedback = ({ open, handleClose }) => {
         e.preventDefault();
         // console.log(feedback);
         try {
-            const response = await axios.post(`${BASE_URL}/user/feedback?id=${currentUser._id}`, { feedback }, {
+            const response = await axios.post(`${API_BASE_URL}/user/feedback?id=${currentUser._id}`, { feedback }, {
                 headers: {
                     authorization: currentUser.token,
                 },

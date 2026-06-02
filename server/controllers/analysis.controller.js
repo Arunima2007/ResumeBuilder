@@ -74,77 +74,43 @@ exports.analyzeResume = async (req, res) => {
 
 // ─── NEW: Gemini AI-powered analysis ───
 exports.analyzeWithGemini = async (req, res) => {
-  const resumeText = this.buildResumeText(resume);
-
-  const prompt = `You are a resume expert. Give a quick assessment.
-
-${resumeText}
-
-Respond ONLY with valid JSON:
-{
-  "score": 0,
-  "verdict": "",
-  "topStrengths": [],
-  "topImprovements": [],
-  "missingElements": [],
-  "quickTips": []
-}`;
-
   try {
-    const result = await this.ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: [
-        { role: "user", parts: [{ text: prompt }] }
-      ],
-      generationConfig: {
-        temperature: 0.3,
-      },
-    });
+    const { resume, jobDescription } = req.body;
 
-    let text =
-      result?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-
-    console.log("🔍 Raw Gemini output:", text);
-
-    if (!text) {
-      return {
+    if (!resume) {
+      return res.status(400).json({
         success: false,
-        error: "Empty response from AI"
-      };
+        message: 'Resume data is required'
+      });
     }
 
-    // Clean response
-    text = text
-      .replace(/```json\s*/g, "")
-      .replace(/```\s*/g, "")
-      .trim();
+    console.log('🤖 Starting Gemini deep analysis...');
+    
+    const gemini = getGeminiService();
+    const result = await gemini.analyzeResume(resume, jobDescription || '');
 
-    // Extract JSON safely (VERY IMPORTANT)
-    const firstBrace = text.indexOf("{");
-    const lastBrace = text.lastIndexOf("}");
-
-    if (firstBrace === -1 || lastBrace === -1) {
-      return {
+    if (result.success) {
+      console.log('✅ Deep analysis completed');
+      res.status(200).json({
+        success: true,
+        data: result.data,
+        source: 'gemini-ai'
+      });
+    } else {
+      res.status(500).json({
         success: false,
-        error: "Invalid AI response format",
-        rawError: text
-      };
+        message: result.error,
+        source: 'gemini-ai'
+      });
     }
-
-    const jsonString = text.slice(firstBrace, lastBrace + 1);
-
-    const parsed = JSON.parse(jsonString);
-
-    return { success: true, data: parsed };
 
   } catch (error) {
-    console.error("Gemini quick analysis error:", error);
-
-    return {
+    console.error('❌ Gemini deep analysis error:', error);
+    res.status(500).json({
       success: false,
-      error: error.message,
-      rawError: error
-    };
+      message: `AI analysis failed: ${error.message}`,
+      source: 'gemini-ai'
+    });
   }
 };
 

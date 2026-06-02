@@ -73,7 +73,7 @@ export default function UserProfile() {
 
   const getUser = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/user/get-user/${currentUser._id}`, {
+      const response = await axios.get(`${API_BASE_URL}/user/get-user/${currentUser._id}`, {
         headers: {
           authorization: currentUser.token,
         },
