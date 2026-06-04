@@ -301,30 +301,13 @@ const Profile = () => {
 
       {/* Navigation Link */}
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mt: 3, px: 2 }}>
-        <Link to="/education" style={linkStyle}>
-          <Typography variant="h6">Education Section</Typography>
-          <ArrowForwardIcon sx={iconStyle} />
+        <Link to="/education" className="link-btn">
+          <span>Education Section</span>
+          <ArrowForwardIcon className="arrow-forward" />
         </Link>
       </Box>
     </div>
   );
-};
-
-const linkStyle = {
-  textDecoration: 'none',
-  color: '#818cf8',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  padding: '12px 24px',
-  borderRadius: '8px',
-  transition: 'all 0.3s ease',
-  backgroundColor: 'rgba(99, 102, 241, 0.1)',
-  border: '1px solid rgba(99, 102, 241, 0.2)',
-};
-
-const iconStyle = {
-  fontSize: '1.5rem',
 };
 
 export default Profile;

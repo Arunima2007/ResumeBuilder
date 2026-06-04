@@ -238,34 +238,17 @@ const Experience = () => {
 
       {/* Navigation Links */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 3, px: 2 }}>
-        <Link to="/projects" style={linkStyle}>
-          <ArrowBackIcon sx={iconStyle} />
-          <Typography variant="h6">Project Section</Typography>
+        <Link to="/projects" className="link-btn">
+          <ArrowBackIcon className="arrow-back" />
+          <span>Project Section</span>
         </Link>
-        <Link to="/extraDetails" style={linkStyle}>
-          <Typography variant="h6">ExtraDetails Section</Typography>
-          <ArrowForwardIcon sx={iconStyle} />
+        <Link to="/extraDetails" className="link-btn">
+          <span>ExtraDetails Section</span>
+          <ArrowForwardIcon className="arrow-forward" />
         </Link>
       </Box>
     </div>
   );
-};
-
-const linkStyle = {
-  textDecoration: 'none',
-  color: '#818cf8',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  padding: '12px 24px',
-  borderRadius: '8px',
-  transition: 'all 0.3s ease',
-  backgroundColor: 'rgba(99, 102, 241, 0.1)',
-  border: '1px solid rgba(99, 102, 241, 0.2)',
-};
-
-const iconStyle = {
-  fontSize: '1.5rem',
 };
 
 export default Experience;

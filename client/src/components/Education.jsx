@@ -715,34 +715,17 @@ const Education = () => {
 
       {/* Navigation Links */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 3, px: 2, width: '100%' }}>
-        <Link to="/profile" style={linkStyle}>
-          <ArrowBackIcon sx={iconStyle} />
-          <Typography variant="h6">Profile Section</Typography>
+        <Link to="/profile" className="link-btn">
+          <ArrowBackIcon className="arrow-back" />
+          <span>Profile Section</span>
         </Link>
-        <Link to="/projects" style={linkStyle}>
-          <Typography variant="h6">Project Section</Typography>
-          <ArrowForwardIcon sx={iconStyle} />
+        <Link to="/projects" className="link-btn">
+          <span>Project Section</span>
+          <ArrowForwardIcon className="arrow-forward" />
         </Link>
       </Box>
     </Container>
   );
-};
-
-const linkStyle = {
-  textDecoration: 'none',
-  color: '#818cf8',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  padding: '12px 24px',
-  borderRadius: '8px',
-  transition: 'all 0.3s ease',
-  backgroundColor: 'rgba(99, 102, 241, 0.1)',
-  border: '1px solid rgba(99, 102, 241, 0.2)',
-};
-
-const iconStyle = {
-  fontSize: '1.5rem',
 };
 
 export default Education;

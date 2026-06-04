@@ -46,24 +46,5 @@ function ResumeAnalysisPage() {
   );
   
 }
-const linkStyle = {
-  textDecoration: 'none',
-  color: 'inherit',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  padding: '12px 20px',
-  borderRadius: '8px',
-  transition: 'all 0.3s ease',
-  backgroundColor: '#f5f5f5',
-  '&:hover': {
-    backgroundColor: '#e0e0e0',
-    transform: 'translateY(-2px)',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-  },
-};
 
-const iconStyle = {
-  fontSize: '1.5rem',
-};
 export default ResumeAnalysisPage;

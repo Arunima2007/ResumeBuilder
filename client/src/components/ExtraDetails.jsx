@@ -544,34 +544,17 @@ const ExtraDetails = () => {
 
       {/* Navigation Links */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 3, px: 2 }}>
-        <Link to="/experience" style={linkStyle}>
-          <ArrowBackIcon sx={iconStyle} />
-          <Typography variant="h6">Experience Section</Typography>
+        <Link to="/experience" className="link-btn">
+          <ArrowBackIcon className="arrow-back" />
+          <span>Experience Section</span>
         </Link>
-        <Link to="/templates" style={linkStyle}>
-          <Typography variant="h6">Resume Templates</Typography>
-          <ArrowForwardIcon sx={iconStyle} />
+        <Link to="/templates" className="link-btn">
+          <span>Resume Templates</span>
+          <ArrowForwardIcon className="arrow-forward" />
         </Link>
       </Box>
     </div>
   );
-};
-
-const linkStyle = {
-  textDecoration: 'none',
-  color: '#818cf8',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
-  padding: '12px 24px',
-  borderRadius: '8px',
-  transition: 'all 0.3s ease',
-  backgroundColor: 'rgba(99, 102, 241, 0.1)',
-  border: '1px solid rgba(99, 102, 241, 0.2)',
-};
-
-const iconStyle = {
-  fontSize: '1.5rem',
 };
 
 export default ExtraDetails;

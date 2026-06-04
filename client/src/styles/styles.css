@@ -47,3 +47,41 @@
   padding: 0 16px;
   width: 100%;
 }
+
+/* Glassmorphic Navigation Link Button */
+.link-btn {
+  text-decoration: none;
+  color: #818cf8;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  cursor: pointer;
+}
+
+.link-btn:hover {
+  background-color: rgba(99, 102, 241, 0.18);
+  border-color: rgba(99, 102, 241, 0.45);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+.link-btn svg {
+  font-size: 1.25rem;
+  transition: transform 0.22s ease;
+}
+
+.link-btn:hover svg.arrow-forward {
+  transform: translateX(4px);
+}
+
+.link-btn:hover svg.arrow-back {
+  transform: translateX(-4px);
+}
