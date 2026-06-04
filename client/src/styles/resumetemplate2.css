@@ -339,3 +339,22 @@ a {
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
+
+/* Force dark text and borders inside the white paper container, overriding dark mode inheritance */
+.resume-container,
+.resume-container * {
+  color: #1e293b !important;
+  border-color: rgba(30, 41, 59, 0.35) !important;
+}
+
+/* Maintain dark colors for icons specifically */
+.resume-container i {
+  color: #4f46e5 !important; /* Premium Indigo for resume icons */
+}
+
+/* Maintain link styling */
+.resume-container a,
+.resume-container a * {
+  color: #2563eb !important; /* Premium Blue for resume links */
+  text-decoration: underline !important;
+}
