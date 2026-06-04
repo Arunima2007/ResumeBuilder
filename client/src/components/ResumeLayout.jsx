@@ -3,20 +3,26 @@ import { Box, Paper, Button, Typography } from '@mui/material';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Analytics, Person, School, Work, Folder, Star } from '@mui/icons-material';
+import { motion } from 'framer-motion';
 
 export default function ResumeLayout() {
     const customStyle = {
         margin: "10px",
         height: "auto",
         width: "80%",
-        padding: "20px",
-        backgroundColor: "#fff",
+        padding: "24px",
+        backgroundColor: "rgba(17, 24, 39, 0.45)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+        border: "1px solid rgba(255, 255, 255, 0.08)",
+        borderRadius: "16px",
     };
     
     const containerStyle = {
-        marginTop: "30",
+        marginTop: "40px",
         display: "flex",
         justifyContent: "center",
+        padding: "0 20px",
     };
 
     const location = useLocation();
@@ -33,12 +39,12 @@ export default function ResumeLayout() {
 
     // Navigation items with icons
     const navItems = [
-        { path: '/profile', label: 'Profile', icon: <Person />, color: 'primary' },
-        { path: '/education', label: 'Education', icon: <School />, color: 'secondary' },
-        { path: '/experience', label: 'Experience', icon: <Work />, color: 'success' },
-        { path: '/projects', label: 'Projects', icon: <Folder />, color: 'warning' },
-        { path: '/extraDetails', label: 'Extra Details', icon: <Star />, color: 'info' },
-        { path: '/resume-analysis', label: 'Analysis', icon: <Analytics />, color: 'error' },
+        { path: '/profile', label: 'Profile', icon: <Person />, color: '#6366f1' },
+        { path: '/education', label: 'Education', icon: <School />, color: '#3b82f6' },
+        { path: '/experience', label: 'Experience', icon: <Work />, color: '#10b981' },
+        { path: '/projects', label: 'Projects', icon: <Folder />, color: '#f59e0b' },
+        { path: '/extraDetails', label: 'Extra Details', icon: <Star />, color: '#a855f7' },
+        { path: '/resume-analysis', label: 'Analysis', icon: <Analytics />, color: '#ef4444' },
     ];
 
     // Check if resume is complete (simplified)
@@ -63,39 +69,50 @@ export default function ResumeLayout() {
     };
 
     return (
-        <div className="main-content">
+        <div className="main-content" style={{ minHeight: "100vh", paddingTop: "80px" }}>
             <Box style={containerStyle}>
                 {/* Sidebar Navigation */}
                 <Box sx={{ 
-                    width: '250px', 
-                    mr: 3,
-                    bgcolor: 'background.paper',
-                    borderRadius: 2,
-                    p: 2,
-                    boxShadow: 2,
+                    width: '260px', 
+                    mr: 4,
+                    bgcolor: 'rgba(17, 24, 39, 0.5)',
+                    backdropFilter: 'blur(16px)',
+                    WebkitBackdropFilter: 'blur(16px)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: 4,
+                    p: 2.5,
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    height: 'fit-content'
                 }}>
-                    <Typography variant="h6" gutterBottom sx={{ mb: 3, textAlign: 'center' }}>
+                    <Typography variant="h6" gutterBottom sx={{ mb: 3, fontWeight: 700, letterSpacing: '0.02em', color: '#fff' }}>
                         Resume Builder
                     </Typography>
                     
                     {/* Progress Bar */}
-                    <Box sx={{ mb: 3 }}>
-                        <Typography variant="body2" color="text.secondary" gutterBottom>
-                            Progress: {getCompletionPercentage()}%
-                        </Typography>
+                    <Box sx={{ mb: 4 }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>
+                                Completion
+                            </Typography>
+                            <Typography variant="body2" sx={{ color: '#10b981', fontWeight: 600 }}>
+                                {getCompletionPercentage()}%
+                            </Typography>
+                        </Box>
                         <Box sx={{ 
-                            height: 8, 
-                            bgcolor: 'grey.200', 
-                            borderRadius: 4,
-                            overflow: 'hidden'
+                            height: 6, 
+                            bgcolor: 'rgba(255, 255, 255, 0.05)', 
+                            borderRadius: 3,
+                            overflow: 'hidden',
+                            border: '1px solid rgba(255,255,255,0.03)'
                         }}>
                             <Box sx={{ 
                                 height: '100%', 
-                                bgcolor: 'primary.main',
+                                background: 'linear-gradient(90deg, #6366f1 0%, #10b981 100%)',
                                 width: `${getCompletionPercentage()}%`,
-                                transition: 'width 0.3s'
+                                transition: 'width 0.5s ease-out',
+                                boxShadow: '0 0 8px rgba(99, 102, 241, 0.4)'
                             }} />
                         </Box>
                     </Box>
@@ -112,16 +129,24 @@ export default function ResumeLayout() {
                                     onClick={() => navigate(item.path)}
                                     sx={{
                                         justifyContent: 'flex-start',
-                                        mb: 1,
-                                        bgcolor: isActive ? `${item.color}.light` : 'transparent',
-                                        color: isActive ? `${item.color}.contrastText` : 'text.primary',
+                                        mb: 1.5,
+                                        bgcolor: isActive ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
+                                        color: isActive ? '#818cf8' : 'rgba(255,255,255,0.65)',
+                                        borderLeft: isActive ? `3px solid ${item.color}` : '3px solid transparent',
+                                        borderTopLeftRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        borderTopRightRadius: 8,
+                                        borderBottomRightRadius: 8,
                                         '&:hover': {
-                                            bgcolor: isActive ? `${item.color}.main` : 'action.hover',
+                                            bgcolor: isActive ? 'rgba(99, 102, 241, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                                            color: '#ffffff',
                                         },
-                                        borderRadius: 2,
-                                        py: 1.5,
+                                        py: 1.25,
+                                        px: 2,
                                         textTransform: 'none',
-                                        fontSize: '1rem'
+                                        fontSize: '0.95rem',
+                                        fontWeight: 600,
+                                        transition: 'all 0.2s ease-in-out'
                                     }}
                                 >
                                     {item.label}
@@ -132,15 +157,22 @@ export default function ResumeLayout() {
                     
                     {/* Analysis Prompt (only show if not on analysis page) */}
                     {location.pathname !== '/resume-analysis' && isResumeComplete() && (
-                        <Box sx={{ 
-                            mt: 3, 
-                            p: 2, 
-                            bgcolor: 'success.light', 
-                            borderRadius: 2,
-                            textAlign: 'center'
-                        }}>
-                            <Typography variant="body2" sx={{ mb: 1, fontWeight: 'bold' }}>
-                                ✅ Resume Complete!
+                        <Box 
+                            component={motion.div}
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            sx={{ 
+                                mt: 3, 
+                                p: 2, 
+                                bgcolor: 'rgba(16, 185, 129, 0.08)',
+                                border: '1px solid rgba(16, 185, 129, 0.2)',
+                                borderRadius: 2,
+                                textAlign: 'center'
+                            }}
+                        >
+                            <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: '#10b981' }}>
+                                ✨ Resume Ready!
                             </Typography>
                             <Button
                                 variant="contained"
@@ -148,8 +180,12 @@ export default function ResumeLayout() {
                                 startIcon={<Analytics />}
                                 onClick={() => navigate('/resume-analysis')}
                                 sx={{ 
-                                    bgcolor: 'success.main',
-                                    '&:hover': { bgcolor: 'success.dark' }
+                                    bgcolor: '#10b981',
+                                    color: '#ffffff',
+                                    fontSize: '0.8rem',
+                                    py: 0.75,
+                                    width: '100%',
+                                    '&:hover': { bgcolor: '#059669' }
                                 }}
                             >
                                 Analyze Now
@@ -159,8 +195,15 @@ export default function ResumeLayout() {
                 </Box>
                 
                 {/* Main Content Area */}
-                <Paper elevation={3} style={customStyle}>
-                    {/* This renders the current page (Profile, Education, OR ResumeAnalysisPage) */}
+                <Paper 
+                    component={motion.div}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    key={location.pathname}
+                    elevation={3} 
+                    style={customStyle}
+                >
                     <Outlet />
                 </Paper>
             </Box>

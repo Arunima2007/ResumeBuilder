@@ -1,6 +1,7 @@
 // components/AnalysisPanel.jsx
 import React, { useState } from 'react';
 import './AnalysisPanel.css';
+import { motion } from 'framer-motion';
 
 function AnalysisPanel({ formData }) {
   const [jobDescription, setJobDescription] = useState('');
@@ -368,7 +369,7 @@ function AnalysisPanel({ formData }) {
                   <div
                     className="ats-score-ring"
                     style={{
-                      background: `conic-gradient(${getScoreColor(aiAnalysis.atsOptimization.score)} ${aiAnalysis.atsOptimization.score * 3.6}deg, #e5e7eb ${aiAnalysis.atsOptimization.score * 3.6}deg)`
+                      background: `conic-gradient(${getScoreColor(aiAnalysis.atsOptimization.score)} ${aiAnalysis.atsOptimization.score * 3.6}deg, rgba(255, 255, 255, 0.06) ${aiAnalysis.atsOptimization.score * 3.6}deg)`
                     }}
                   >
                     <div className="ats-score-inner">

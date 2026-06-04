@@ -82,45 +82,105 @@ export default function LandingPage() {
     };
 
     return (
-        <div className="main-content">
+        <div className="main-content" style={{ minHeight: "100vh", paddingTop: "80px", overflow: "hidden" }}>
             <ThemeProvider theme={theme}>
-                <Box className='box-container' sx={{ backgroundColor: 'transparent' }}>
-                    <div>
-                        
-                        <div>
-                            <div className="overlay-text">
-                                <Container maxWidth="md">
-                                    <motion.div
-                                        initial={{ opacity: 0, y: -50 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 1 }}
-                                    >
-                                        <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: '800' }}>
-                                            Build. Analyze. Impress. Your Complete Resume Success Platform.
-                                        </Typography>
-                                    </motion.div>
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 50 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 1, delay: 0.5 }}
-                                    >
-                                        <Typography variant="h5" component="h1" gutterBottom>
-                                            Create a resume that stands out with our easy-to-use builder
-                                        </Typography>
-                                    </motion.div>
-                                    <motion.div
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ duration: 1, delay: 1 }}
-                                    >
-                                        <Button onClick={handleGetStarted} variant='outlined' sx={{ borderRadius: '30px', color: 'black', backgroundColor: "var(--btnColor)", "&:hover": { backgroundColor: "var(--landBtnHover)", border: 'none' }, border: 'none', fontWeight: 600 }} size="large">
-                                            Get Started
-                                        </Button>
-                                    </motion.div>
-                                </Container>
-                            </div>
+                <Box className='box-container'>
+                    {/* Background glow effects */}
+                    <div className="glow-blob glow-blob-1"></div>
+                    <div className="glow-blob glow-blob-2"></div>
+
+                    <Container maxWidth="lg" sx={{ zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        {/* Hero Section */}
+                        <Box sx={{ maxWidth: '850px', mb: 6 }}>
+                            <motion.div
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+                            >
+                                <Typography className="hero-gradient-text" variant="h2" gutterBottom sx={{ fontSize: { xs: '2.5rem', sm: '3.75rem' } }}>
+                                    Build. Analyze. Impress. Your Complete Resume Success Platform.
+                                </Typography>
+                            </motion.div>
+                            
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                            >
+                                <Typography variant="h5" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 4, fontWeight: 400, maxWidth: '600px', mx: 'auto' }}>
+                                    Create a resume that stands out with our easy-to-use builder and get instant AI-powered feedback.
+                                </Typography>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.6, delay: 0.4 }}
+                            >
+                                <Button 
+                                    onClick={handleGetStarted} 
+                                    variant='contained' 
+                                    sx={{ 
+                                        borderRadius: '30px', 
+                                        color: '#ffffff', 
+                                        backgroundColor: '#6366f1', 
+                                        "&:hover": { backgroundColor: '#4f46e5', transform: 'scale(1.03)', boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)' },
+                                        fontWeight: 700, 
+                                        px: 5, 
+                                        py: 1.75,
+                                        fontSize: '1.05rem',
+                                        transition: 'all 0.2s',
+                                        boxShadow: '0 0 15px rgba(99, 102, 241, 0.3)'
+                                    }} 
+                                    size="large"
+                                >
+                                    Get Started Free
+                                </Button>
+                            </motion.div>
+                        </Box>
+
+                        {/* Feature Cards Grid */}
+                        <div className="features-grid">
+                            <motion.div 
+                                className="feature-card"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.5 }}
+                            >
+                                <span className="feature-icon">✍️</span>
+                                <Typography variant="h6" className="feature-title">Resume Builder</Typography>
+                                <Typography variant="body2" className="feature-desc">
+                                    Structured, clean, and intuitive UI to input profile data, projects, experience, and certifications.
+                                </Typography>
+                            </motion.div>
+
+                            <motion.div 
+                                className="feature-card"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.6 }}
+                            >
+                                <span className="feature-icon">🧠</span>
+                                <Typography variant="h6" className="feature-title">AI Analysis</Typography>
+                                <Typography variant="body2" className="feature-desc">
+                                    Deep evaluation powered by Google Gemini AI providing granular feedback on sections, formatting, and content.
+                                </Typography>
+                            </motion.div>
+
+                            <motion.div 
+                                className="feature-card"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.7 }}
+                            >
+                                <span className="feature-icon">🎯</span>
+                                <Typography variant="h6" className="feature-title">ATS Checker</Typography>
+                                <Typography variant="body2" className="feature-desc">
+                                    Compare your resume against target job descriptions and optimize keywords to bypass tracking systems.
+                                </Typography>
+                            </motion.div>
                         </div>
-                    </div>
+                    </Container>
                 </Box>
             </ThemeProvider>
         </div>

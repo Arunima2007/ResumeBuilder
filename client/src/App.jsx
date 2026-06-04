@@ -23,15 +23,86 @@ import ResumeLayout from './components/ResumeLayout';
 import ErrorPage from './pages/ErrorPage';
 // ✅ ADD THIS IMPORT
 import ResumeAnalysisPage from './pages/ResumeAnalysisPage';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#6366f1', // Indigo
+      light: 'rgba(99, 102, 241, 0.15)',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      main: '#10b981', // Emerald
+      light: 'rgba(16, 185, 129, 0.15)',
+      contrastText: '#ffffff',
+    },
+    success: {
+      main: '#10b981',
+      light: 'rgba(16, 185, 129, 0.15)',
+    },
+    warning: {
+      main: '#f59e0b',
+      light: 'rgba(245, 158, 11, 0.15)',
+    },
+    info: {
+      main: '#3b82f6',
+      light: 'rgba(59, 130, 246, 0.15)',
+    },
+    error: {
+      main: '#ef4444',
+      light: 'rgba(239, 68, 68, 0.15)',
+    },
+    background: {
+      default: '#0b0f19',
+      paper: '#111827',
+    },
+    text: {
+      primary: '#f3f4f6',
+      secondary: '#9ca3af',
+    },
+  },
+  typography: {
+    fontFamily: '"Plus Jakarta Sans", "Inter", "Roboto", sans-serif',
+  },
+  components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none',
+          backgroundColor: 'rgba(17, 24, 39, 0.7)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: 16,
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+          textTransform: 'none',
+          fontWeight: 600,
+          padding: '8px 16px',
+        },
+      },
+    },
+  },
+});
 
 function App() {
   return (
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter>
-            <Navbar />
-            <Routes>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <BrowserRouter>
+              <Navbar />
+              <Routes>
               <Route path='/' element={<LandingPage />} />
               <Route path='/sign-in' element={<SignIn />} />
               <Route element={<Layout />}>
@@ -52,8 +123,9 @@ function App() {
                 <Route path='*' element={<ErrorPage />} />
               </Route>
             </Routes>
-          </BrowserRouter>
-          <ToastContainer />
+            </BrowserRouter>
+            <ToastContainer />
+          </ThemeProvider>
         </PersistGate>
       </Provider>
     </>

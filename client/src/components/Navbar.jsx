@@ -44,7 +44,9 @@ const Navbar = () => {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "var(--bgColor, #0d47a1)",
+        backgroundColor: "rgba(11, 15, 25, 0.75)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
         color: "white",
         width: "100vw",
         left: 0,
@@ -52,7 +54,8 @@ const Navbar = () => {
         top: 0,
         margin: 0,
         padding: 0,
-        boxShadow: "0 2px 10px rgba(0,0,0,0.15)",
+        boxShadow: "none",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
         zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
@@ -68,9 +71,9 @@ const Navbar = () => {
       >
         {/* LEFT SIDE - Logo and Brand Name */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <img src={logo} alt="resume" width="40" height="40" />
-          <Typography variant="h6" sx={{ fontWeight: 600 }}>
-            <Link to="/" style={{ color: "black", textDecoration: "none" }}>
+          <img src={logo} alt="resume" width="40" height="40" style={{ filter: "drop-shadow(0 0 8px rgba(99, 102, 241, 0.4))" }} />
+          <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: '0.05em' }}>
+            <Link to="/" style={{ color: "#ffffff", textDecoration: "none" }}>
               RESUME BUILDER
             </Link>
           </Typography>
@@ -82,9 +85,9 @@ const Navbar = () => {
             <Button 
               onClick={handleSectionsClick}
               sx={{
-                color: "black",
+                color: "rgba(255, 255, 255, 0.85)",
                 fontWeight: 600,
-                '&:hover': { color: '#222' }
+                '&:hover': { color: '#ffffff' }
               }}
             >
               Sections
@@ -108,7 +111,7 @@ const Navbar = () => {
               src={currentUser?.avatar}
               alt="user"
               onClick={handleClick}
-              sx={{ cursor: "pointer" }}
+              sx={{ cursor: "pointer", border: "2px solid rgba(255,255,255,0.1)", '&:hover': { border: "2px solid #6366f1" } }}
             />
 
             <Menu
@@ -126,7 +129,7 @@ const Navbar = () => {
           </div>
         ) : (
           <Link to="/sign-in" style={{ textDecoration: "none", color: "inherit" }}>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit" sx={{ color: "rgba(255, 255, 255, 0.85)", '&:hover': { color: '#ffffff' } }}>Login</Button>
           </Link>
         )}
       </Toolbar>
