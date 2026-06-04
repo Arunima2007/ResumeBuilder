@@ -269,7 +269,7 @@ export default function UserProfile() {
                   mt: 3,
                   mb: 2,
                   backgroundColor: "var(--btn)",
-                  color: "black",
+                  color: "#ffffff",
                   "&:hover": { backgroundColor: "var(--btnHover)" },
                 }}
                 onClick={handleSubmit}

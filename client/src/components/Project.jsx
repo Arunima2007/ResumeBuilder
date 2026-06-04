@@ -102,7 +102,7 @@ const Projects = () => {
                 {/* Project Title */}
                 <Grid item xs={12}>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'black', fontSize: '1.1rem' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'text.primary', fontSize: '1.1rem' }}>
                       Project Title
                     </Typography>
                   </Box>
@@ -129,7 +129,7 @@ const Projects = () => {
                 {/* Project Description */}
                 <Grid item xs={12}>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'black', fontSize: '1.1rem' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'text.primary', fontSize: '1.1rem' }}>
                       Project Description
                     </Typography>
                     <Tooltip
@@ -165,7 +165,7 @@ const Projects = () => {
                 {/* Project Link */}
                 <Grid item xs={12}>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'black', fontSize: '1.1rem' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'text.primary', fontSize: '1.1rem' }}>
                       Project Link (Hosted)
                     </Typography>
                   </Box>
@@ -191,7 +191,7 @@ const Projects = () => {
                 {/* Tech Stack */}
                 <Grid item xs={12}>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'black', fontSize: '1.1rem' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'text.primary', fontSize: '1.1rem' }}>
                       Project Tech Stack
                     </Typography>
                     <Tooltip
@@ -224,7 +224,7 @@ const Projects = () => {
               variant="contained"
               sx={{
                 backgroundColor: "var(--btn)",
-                color: 'black',
+                color: '#ffffff',
                 '&:hover': { 
                   backgroundColor: "var(--btnHover)",
                   transform: 'translateY(-2px)',
@@ -259,19 +259,15 @@ const Projects = () => {
 
 const linkStyle = {
   textDecoration: 'none',
-  color: 'inherit',
+  color: '#818cf8',
   display: 'flex',
   alignItems: 'center',
   gap: '8px',
-  padding: '12px 20px',
+  padding: '12px 24px',
   borderRadius: '8px',
   transition: 'all 0.3s ease',
-  backgroundColor: '#f5f5f5',
-  '&:hover': {
-    backgroundColor: '#e0e0e0',
-    transform: 'translateY(-2px)',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-  },
+  backgroundColor: 'rgba(99, 102, 241, 0.1)',
+  border: '1px solid rgba(99, 102, 241, 0.2)',
 };
 
 const iconStyle = {

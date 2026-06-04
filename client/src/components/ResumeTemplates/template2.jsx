@@ -388,7 +388,7 @@ export default function Template2() {
             borderRadius: "20px",
             width: "12rem",
             backgroundColor: "var(--btn)",
-            color: 'black',
+            color: '#ffffff',
             '&:hover': { backgroundColor: "var(--btnHover)" }
           }}
           onClick={handleDownload}
@@ -410,7 +410,7 @@ export default function Template2() {
                 <Button
                   variant="outlined"
                   sx={{
-                    margin: "5px", borderRadius: "20px", width: "12rem", backgroundColor: "var(--btn)", color: 'black', '&:hover': { backgroundColor: "var(--btnHover)" },
+                    margin: "5px", borderRadius: "20px", width: "12rem", backgroundColor: "var(--btn)", color: '#ffffff', '&:hover': { backgroundColor: "var(--btnHover)" },
                   }}
                   endIcon={<ArrowForwardIcon />}
                 >

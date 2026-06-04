@@ -730,19 +730,15 @@ const Education = () => {
 
 const linkStyle = {
   textDecoration: 'none',
-  color: 'inherit',
+  color: '#818cf8',
   display: 'flex',
   alignItems: 'center',
   gap: '8px',
-  padding: '12px 20px',
+  padding: '12px 24px',
   borderRadius: '8px',
   transition: 'all 0.3s ease',
-  backgroundColor: '#f5f5f5',
-  '&:hover': {
-    backgroundColor: '#e0e0e0',
-    transform: 'translateY(-2px)',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-  },
+  backgroundColor: 'rgba(99, 102, 241, 0.1)',
+  border: '1px solid rgba(99, 102, 241, 0.2)',
 };
 
 const iconStyle = {

@@ -83,10 +83,12 @@ const Contact = () => {
             >
               <IconButton
                 sx={{
-                  backgroundColor: "#FFECD6",
+                  backgroundColor: "rgba(99, 102, 241, 0.15)",
+                  color: "#818cf8",
                   borderRadius: "50%",
                   padding: "12px",
                   flexShrink: 0,
+                  "&:hover": { backgroundColor: "rgba(99, 102, 241, 0.25)" }
                 }}
               >
                 <Call />
@@ -107,10 +109,12 @@ const Contact = () => {
             >
               <IconButton
                 sx={{
-                  backgroundColor: "#FFECD6",
+                  backgroundColor: "rgba(99, 102, 241, 0.15)",
+                  color: "#818cf8",
                   borderRadius: "50%",
                   padding: "12px",
                   flexShrink: 0,
+                  "&:hover": { backgroundColor: "rgba(99, 102, 241, 0.25)" }
                 }}
               >
                 <MailOutline />
@@ -131,10 +135,12 @@ const Contact = () => {
             >
               <IconButton
                 sx={{
-                  backgroundColor: "#FFECD6",
+                  backgroundColor: "rgba(99, 102, 241, 0.15)",
+                  color: "#818cf8",
                   borderRadius: "50%",
                   padding: "12px",
                   flexShrink: 0,
+                  "&:hover": { backgroundColor: "rgba(99, 102, 241, 0.25)" }
                 }}
                 onClick={() =>
                   handleSocialMediaClick(
