@@ -112,7 +112,7 @@ const ExtraDetails = () => {
     };
     
     try {
-      const response = await axios.post(`${API_BASE_URL}/data/resume-data?id=${currentUser._id}`, { resumeData }, {
+      const response = await axios.post(`${API_BASE_URL}/resume/resume-data?id=${currentUser._id}`, { resumeData }, {
         headers: {
           authorization: currentUser.token,
         },

@@ -80,36 +80,40 @@ exports.analyzeWithGemini = async (req, res) => {
     if (!resume) {
       return res.status(400).json({
         success: false,
-        message: 'Resume data is required'
+        message: "Resume data is required"
       });
     }
 
-    console.log('🤖 Starting Gemini deep analysis...');
-    
+    console.log("🤖 Starting Gemini full analysis...");
+
     const gemini = getGeminiService();
-    const result = await gemini.analyzeResume(resume, jobDescription || '');
+
+    const result = await gemini.analyzeResume(
+      resume,
+      jobDescription || ""
+    );
 
     if (result.success) {
-      console.log('✅ Deep analysis completed');
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         data: result.data,
-        source: 'gemini-ai'
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        message: result.error,
-        source: 'gemini-ai'
+        source: "gemini-ai"
       });
     }
 
-  } catch (error) {
-    console.error('❌ Gemini deep analysis error:', error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: `AI analysis failed: ${error.message}`,
-      source: 'gemini-ai'
+      message: result.error,
+      source: "gemini-ai"
+    });
+
+  } catch (error) {
+    console.error("❌ Gemini full analysis error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      source: "gemini-ai"
     });
   }
 };
