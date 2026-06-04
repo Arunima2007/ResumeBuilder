@@ -12,10 +12,16 @@ export default function ResumeLayout() {
         width: "80%",
         padding: "24px",
         backgroundColor: "rgba(17, 24, 39, 0.45)",
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-        border: "1px solid rgba(255, 255, 255, 0.08)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        border: "1px solid rgba(99, 102, 241, 0.22)",
         borderRadius: "16px",
+        boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 16px rgba(99, 102, 241, 0.08)",
+        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        '&:hover': {
+            borderColor: 'rgba(99, 102, 241, 0.42)',
+            boxShadow: '0 12px 40px 0 rgba(0, 0, 0, 0.45), 0 0 24px rgba(99, 102, 241, 0.18)',
+        }
     };
     
     const containerStyle = {
@@ -106,15 +112,20 @@ export default function ResumeLayout() {
                     width: '260px', 
                     mr: 4,
                     bgcolor: 'rgba(17, 24, 39, 0.5)',
-                    backdropFilter: 'blur(16px)',
-                    WebkitBackdropFilter: 'blur(16px)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    backdropFilter: 'blur(20px)',
+                    WebkitBackdropFilter: 'blur(20px)',
+                    border: '1px solid rgba(99, 102, 241, 0.22)',
                     borderRadius: 4,
                     p: 2.5,
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.37), 0 0 16px rgba(99, 102, 241, 0.08)',
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 'fit-content'
+                    height: 'fit-content',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    '&:hover': {
+                        borderColor: 'rgba(99, 102, 241, 0.42)',
+                        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.45), 0 0 24px rgba(99, 102, 241, 0.18)',
+                    }
                 }}>
                     <Typography variant="h6" gutterBottom sx={{ mb: 3, fontWeight: 700, letterSpacing: '0.02em', color: '#fff' }}>
                         Resume Builder
@@ -232,7 +243,7 @@ export default function ResumeLayout() {
                     transition={{ duration: 0.35, ease: 'easeOut' }}
                     key={location.pathname}
                     elevation={3} 
-                    style={customStyle}
+                    sx={customStyle}
                 >
                     <Outlet />
                 </Paper>

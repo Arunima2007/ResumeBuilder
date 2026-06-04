@@ -36,13 +36,14 @@
   background: rgba(17, 24, 39, 0.45);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(99, 102, 241, 0.22);
   border-radius: 16px;
   padding: 32px 24px;
   text-align: left;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), 0 0 16px rgba(99, 102, 241, 0.05);
 }
 
 .feature-card::before {
@@ -59,8 +60,8 @@
 
 .feature-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.45);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.25), 0 0 24px rgba(99, 102, 241, 0.18);
 }
 
 .feature-card:hover::before {

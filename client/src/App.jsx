@@ -72,11 +72,17 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundImage: 'none',
-          backgroundColor: 'rgba(17, 24, 39, 0.7)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
+          backgroundColor: 'rgba(17, 24, 39, 0.65)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: '1px solid rgba(99, 102, 241, 0.22)',
+          boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 16px rgba(99, 102, 241, 0.08)',
           borderRadius: 16,
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          '&:hover': {
+            borderColor: 'rgba(99, 102, 241, 0.42)',
+            boxShadow: '0 12px 40px 0 rgba(0, 0, 0, 0.45), 0 0 24px rgba(99, 102, 241, 0.18)',
+          }
         },
       },
     },
