@@ -217,10 +217,18 @@ export default function UserProfile() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              bgcolor: '#fff',
-              padding: '20px',
-              borderRadius: '10px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              bgcolor: 'rgba(17, 24, 39, 0.55)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              border: '1px solid rgba(99, 102, 241, 0.22)',
+              borderRadius: '16px',
+              boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 16px rgba(99, 102, 241, 0.08)',
+              padding: '32px 24px',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              '&:hover': {
+                borderColor: 'rgba(99, 102, 241, 0.42)',
+                boxShadow: '0 12px 40px 0 rgba(0, 0, 0, 0.45), 0 0 24px rgba(99, 102, 241, 0.18)',
+              }
             }}
           >
             <Avatar src={currentUser?.avatar} alt="user" sx={styles.avatar} />
