@@ -13,38 +13,56 @@
 }
 
 .container .heading {
-  font-size: 2rem;
-  color: #333;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #ffffff;
   text-align: center;
   padding: 20px;
+  letter-spacing: -0.02em;
 }
 
 .template {
   margin: 10px;
   cursor: pointer;
-  transition: box-shadow 0.3s ease;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .template-container p {
   text-align: center;
-  font-size: 1.2rem;
-  color: #333;
-  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #818cf8;
+  margin: 15px auto 10px auto;
+  padding: 8px 18px;
+  border-radius: 6px;
+  background-color: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  width: fit-content;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .template-container p:hover {
-  color: #333;
-  text-decoration: underline;
+  color: #ffffff;
+  background-color: rgba(99, 102, 241, 0.18);
+  border-color: rgba(99, 102, 241, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+  text-decoration: none;
   cursor: pointer;
 }
 
 .template img {
   width: 280px;
   height: 380px;
+  border-radius: 12px;
 }
 
 .template:hover {
-  box-shadow: 0 0 70px rgba(0, 0, 0, 0.3);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.35);
 }
 
 .template-preview-overlay {
@@ -53,10 +71,13 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: greenyellow;
+  background-color: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 }
 
 .template-preview {
