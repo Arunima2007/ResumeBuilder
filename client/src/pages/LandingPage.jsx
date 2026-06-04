@@ -31,6 +31,7 @@ export default function LandingPage() {
     const dispatch = useDispatch();
 
     const getAllResumeData = async () => {
+        if (!currentUser) return;
         try {
             const response = await axios.get(`${API_BASE_URL}/data/get-all-resume-data?id=${currentUser._id}`, {
                 headers: {
