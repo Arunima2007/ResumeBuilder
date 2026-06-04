@@ -352,6 +352,11 @@ a {
   color: #4f46e5 !important; /* Premium Indigo for resume icons */
 }
 
+/* Make start and end date (calendar) icon black */
+.resume-container i.fa-calendar {
+  color: #000000 !important;
+}
+
 /* Maintain link styling */
 .resume-container a,
 .resume-container a * {
