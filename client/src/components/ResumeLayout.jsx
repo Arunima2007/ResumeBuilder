@@ -49,22 +49,52 @@ export default function ResumeLayout() {
 
     // Check if resume is complete (simplified)
     const isResumeComplete = () => {
-        const hasProfile = resumeData.profile?.firstName && resumeData.profile?.email;
-        const hasEducation = resumeData.education?.length > 0;
-        const hasExperience = resumeData.experience?.length > 0;
-        const hasSkills = Object.values(resumeData.extraDetails?.skills || {}).flat().length > 0;
-        const completedSections = [hasEducation, hasExperience, hasSkills].filter(Boolean).length;
+        const hasProfile = Boolean(resumeData.profile?.firstName?.trim() && resumeData.profile?.email?.trim());
+        const hasEducation = Boolean(
+            resumeData.education?.college?.trim() ||
+            resumeData.education?.higherCollege?.trim() ||
+            resumeData.education?.school?.trim()
+        );
+        const hasExperience = Array.isArray(resumeData.experience) && resumeData.experience.some(
+            (exp) => exp?.role?.trim() || exp?.institute?.trim() || exp?.desc?.trim()
+        );
+        const hasProjects = Array.isArray(resumeData.projects) && resumeData.projects.some(
+            (proj) => proj?.title?.trim() || proj?.description?.trim() || proj?.techStack?.trim()
+        );
+        const hasSkills = Object.values(resumeData.extraDetails?.skills || {}).flat().some(
+            (skill) => typeof skill === 'string' && skill.trim() !== ""
+        );
+        const completedSections = [hasEducation, hasExperience, hasProjects, hasSkills].filter(Boolean).length;
         return hasProfile && completedSections >= 2;
     };
 
     // Calculate completion percentage
     const getCompletionPercentage = () => {
         let completed = 0;
-        const totalSections = 4;
-        if (resumeData.profile?.firstName && resumeData.profile?.email) completed++;
-        if (resumeData.education?.length > 0) completed++;
-        if (resumeData.experience?.length > 0) completed++;
-        if (Object.values(resumeData.extraDetails?.skills || {}).flat().length > 0) completed++;
+        const totalSections = 5;
+        
+        const hasProfile = Boolean(resumeData.profile?.firstName?.trim() && resumeData.profile?.email?.trim());
+        const hasEducation = Boolean(
+            resumeData.education?.college?.trim() ||
+            resumeData.education?.higherCollege?.trim() ||
+            resumeData.education?.school?.trim()
+        );
+        const hasExperience = Array.isArray(resumeData.experience) && resumeData.experience.some(
+            (exp) => exp?.role?.trim() || exp?.institute?.trim() || exp?.desc?.trim()
+        );
+        const hasProjects = Array.isArray(resumeData.projects) && resumeData.projects.some(
+            (proj) => proj?.title?.trim() || proj?.description?.trim() || proj?.techStack?.trim()
+        );
+        const hasSkills = Object.values(resumeData.extraDetails?.skills || {}).flat().some(
+            (skill) => typeof skill === 'string' && skill.trim() !== ""
+        );
+
+        if (hasProfile) completed++;
+        if (hasEducation) completed++;
+        if (hasExperience) completed++;
+        if (hasProjects) completed++;
+        if (hasSkills) completed++;
+        
         return Math.round((completed / totalSections) * 100);
     };
 
