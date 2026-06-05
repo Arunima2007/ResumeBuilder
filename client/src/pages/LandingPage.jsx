@@ -33,7 +33,7 @@ export default function LandingPage() {
     const getAllResumeData = async () => {
         if (!currentUser) return;
         try {
-            const response = await axios.get(`${API_BASE_URL}/data/get-all-resume-data?id=${currentUser._id}`, {
+            const response = await axios.get(`${API_BASE_URL}/resume/get-all-resume-data?id=${currentUser._id}`, {
                 headers: {
                     authorization: currentUser.token,
                 },
@@ -75,8 +75,10 @@ export default function LandingPage() {
     };
 
     useEffect(() => {
-        getAllResumeData();
-    }, []);
+        if (currentUser) {
+            getAllResumeData();
+        }
+    }, [currentUser]);
 
     const handleGetStarted = () => {
         navigate('/profile');
