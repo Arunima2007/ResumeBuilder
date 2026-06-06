@@ -101,6 +101,9 @@ const extraDetailsSlice = createSlice({
         addCoreSubjects: (state, _action) => {
             state.coreSubjects.push(""); // Add an empty string as a new core subject
         },
+        setExtraDetails: (state, action) => {
+            return action.payload;
+        },
         clearExtraDetails: () => initialState,
     },
 });
@@ -118,6 +121,7 @@ export const {
     updateCoreSubjects,
     deleteCoreSubjects,
     addCoreSubjects,
+    setExtraDetails,
     clearExtraDetails
 } = extraDetailsSlice.actions;
 export const selectExtraDetails = (state) => state.extraDetails;

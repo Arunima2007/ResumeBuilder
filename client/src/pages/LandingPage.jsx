@@ -7,11 +7,11 @@ import '../styles/LandingPage.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEducation } from '../redux/educationSlice';
 import { updateProfile } from '../redux/profileSlice';
-import { updateProject } from '../redux/projectSlice';
-import { updateExperience } from '../redux/experienceSlice';
+import { setProjects } from '../redux/projectSlice';
+import { setExperience } from '../redux/experienceSlice';
 import axios from 'axios';
 import { API_BASE_URL } from '../api';
-import { updateAchievements, updateExtraCoCurricular, updateSkills } from '../redux/extraDetailsSlice';
+import { setExtraDetails } from '../redux/extraDetailsSlice';
 
 const theme = createTheme({
     palette: {
@@ -40,34 +40,21 @@ export default function LandingPage() {
             });
             const resumeData = response.data.resumeData[0];
             if (resumeData) {
-                dispatch(updateProfile(resumeData.profile));
-                dispatch(updateEducation(resumeData.education[0]));
-                resumeData.projects.forEach((project, index) => {
-                    Object.keys(project).forEach(field => {
-                        dispatch(updateProject({ index, field, value: project[field] }));
-                    });
-                });
-
-                resumeData.experience.forEach((experience, index) => {
-                    Object.keys(experience).forEach(field => {
-                        dispatch(updateExperience({ index, field, value: experience[field] }));
-                    });
-                });
-                const { skills, achievements, extraCoCurricular } = resumeData.extraDetails;
-                
-                Object.keys(skills).forEach((type) => {
-                    skills[type].forEach((skill, index) => {
-                        dispatch(updateSkills({ type, index, value: skill }));
-                    });
-                });
-
-                achievements.forEach((achievement, index) => {
-                    dispatch(updateAchievements({ index, value: achievement }));
-                });
-
-                extraCoCurricular.forEach((activity, index) => {
-                    dispatch(updateExtraCoCurricular({ index, value: activity }));
-                });
+                if (resumeData.profile) {
+                    dispatch(updateProfile(resumeData.profile));
+                }
+                if (resumeData.education && resumeData.education[0]) {
+                    dispatch(updateEducation(resumeData.education[0]));
+                }
+                if (resumeData.projects) {
+                    dispatch(setProjects(resumeData.projects));
+                }
+                if (resumeData.experience) {
+                    dispatch(setExperience(resumeData.experience));
+                }
+                if (resumeData.extraDetails) {
+                    dispatch(setExtraDetails(resumeData.extraDetails));
+                }
             }
         } catch (error) {
             console.error("Error in getAllResumeData:", error);

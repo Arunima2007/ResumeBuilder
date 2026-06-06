@@ -28,10 +28,13 @@ const experienceSlice = createSlice({
         deleteExperience: (state, action) => {
             state.splice(action.payload, 1);
         },
+        setExperience: (state, action) => {
+            return action.payload;
+        },
         clearExperience: () => initialState,
     },
 });
 
-export const { updateExperience, addExperience, deleteExperience, clearExperience } = experienceSlice.actions;
+export const { updateExperience, addExperience, deleteExperience, setExperience, clearExperience } = experienceSlice.actions;
 export const selectExperience = (state) => state.experience;
 export default experienceSlice.reducer;
