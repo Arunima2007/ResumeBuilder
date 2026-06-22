@@ -35,9 +35,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-HmAlYRaMiTx6PqSGcL9ifkAFxWHVPvhiHQ&s",
     },
-    feedback: {
-        type: String,
-    },
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
