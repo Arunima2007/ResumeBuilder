@@ -1,5 +1,4 @@
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store';

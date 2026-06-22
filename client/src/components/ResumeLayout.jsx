@@ -1,11 +1,55 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Paper, Button, Typography } from '@mui/material';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Analytics, Person, School, Work, Folder, Star } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import axios from 'axios';
+import { API_BASE_URL } from '../api';
+import { updateProfile } from '../redux/profileSlice';
+import { updateEducation } from '../redux/educationSlice';
+import { setProjects } from '../redux/projectSlice';
+import { setExperience } from '../redux/experienceSlice';
+import { setExtraDetails } from '../redux/extraDetailsSlice';
 
 export default function ResumeLayout() {
+    const dispatch = useDispatch();
+    const currentUser = useSelector((state) => state.user.currentUser);
+
+    useEffect(() => {
+        const fetchResumeData = async () => {
+            if (!currentUser) return;
+            try {
+                const response = await axios.get(`${API_BASE_URL}/resume/get-all-resume-data?id=${currentUser._id}`, {
+                    headers: {
+                        authorization: currentUser.token,
+                    },
+                });
+                const resumeData = response.data.resumeData[0];
+                if (resumeData) {
+                    if (resumeData.profile) {
+                        dispatch(updateProfile(resumeData.profile));
+                    }
+                    if (resumeData.education && resumeData.education[0]) {
+                        dispatch(updateEducation(resumeData.education[0]));
+                    }
+                    if (resumeData.projects) {
+                        dispatch(setProjects(resumeData.projects));
+                    }
+                    if (resumeData.experience) {
+                        dispatch(setExperience(resumeData.experience));
+                    }
+                    if (resumeData.extraDetails) {
+                        dispatch(setExtraDetails(resumeData.extraDetails));
+                    }
+                }
+            } catch (error) {
+                console.error("Error in fetchResumeData:", error);
+            }
+        };
+
+        fetchResumeData();
+    }, [currentUser, dispatch]);
     const customStyle = {
         margin: "10px",
         height: "auto",
